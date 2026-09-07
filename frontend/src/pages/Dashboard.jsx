@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../services/api";
 import "./Dashboard.css";
-
-const API_URL = "http://127.0.0.1:8000";
 
 function Dashboard({ onLogout }) {
   const [tickets, setTickets] = useState([]);
@@ -74,14 +73,26 @@ function Dashboard({ onLogout }) {
         }),
       });
 
+      if (response.status === 401) {
+        onLogout();
+        return;
+      }
+
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.detail || "Could not create ticket.");
+
+        throw new Error(
+          data.detail || "Could not create ticket."
+        );
       }
 
       const newTicket = await response.json();
 
-      setTickets((current) => [newTicket, ...current]);
+      setTickets((current) => [
+        newTicket,
+        ...current,
+      ]);
+
       setSelectedTicket(newTicket);
 
       setTitle("");
@@ -110,8 +121,14 @@ function Dashboard({ onLogout }) {
         }
       );
 
+      if (response.status === 401) {
+        onLogout();
+        return;
+      }
+
       if (!response.ok) {
         const data = await response.json();
+
         throw new Error(
           data.detail || "Could not analyze ticket."
         );
@@ -134,7 +151,9 @@ function Dashboard({ onLogout }) {
     <div className="dashboard">
       <aside className="sidebar">
         <div className="brand">
-          <div className="brand-logo">AI</div>
+          <div className="brand-logo">
+            AI
+          </div>
 
           <div>
             <h2>AI Support Desk</h2>
@@ -168,9 +187,10 @@ function Dashboard({ onLogout }) {
         <header className="topbar">
           <div>
             <h1>Support Dashboard</h1>
+
             <p>
-              Manage customer requests and analyze them
-              with AI.
+              Manage customer requests and analyze
+              them with AI.
             </p>
           </div>
 
@@ -196,7 +216,8 @@ function Dashboard({ onLogout }) {
             <strong>
               {
                 tickets.filter(
-                  (ticket) => ticket.status === "open"
+                  (ticket) =>
+                    ticket.status === "open"
                 ).length
               }
             </strong>
@@ -207,7 +228,8 @@ function Dashboard({ onLogout }) {
             <strong>
               {
                 tickets.filter(
-                  (ticket) => ticket.priority === "high"
+                  (ticket) =>
+                    ticket.priority === "high"
                 ).length
               }
             </strong>
@@ -224,7 +246,9 @@ function Dashboard({ onLogout }) {
             <div className="panel-header">
               <div>
                 <h3>Create Ticket</h3>
-                <p>Add a new customer support request.</p>
+                <p>
+                  Add a new customer support request.
+                </p>
               </div>
             </div>
 
@@ -268,9 +292,17 @@ function Dashboard({ onLogout }) {
                     setPriority(event.target.value)
                   }
                 >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
+                  <option value="low">
+                    Low
+                  </option>
+
+                  <option value="medium">
+                    Medium
+                  </option>
+
+                  <option value="high">
+                    High
+                  </option>
                 </select>
               </div>
 
@@ -290,7 +322,9 @@ function Dashboard({ onLogout }) {
             <div className="panel-header">
               <div>
                 <h3>Recent Tickets</h3>
-                <p>Your current support requests.</p>
+                <p>
+                  Your current support requests.
+                </p>
               </div>
 
               <button
@@ -315,7 +349,8 @@ function Dashboard({ onLogout }) {
                   <button
                     key={ticket.id}
                     className={`ticket-item ${
-                      selectedTicket?.id === ticket.id
+                      selectedTicket?.id ===
+                      ticket.id
                         ? "selected"
                         : ""
                     }`}
@@ -325,7 +360,9 @@ function Dashboard({ onLogout }) {
                     }}
                   >
                     <div className="ticket-item-top">
-                      <strong>{ticket.title}</strong>
+                      <strong>
+                        {ticket.title}
+                      </strong>
 
                       <span
                         className={priorityClass(
@@ -336,11 +373,15 @@ function Dashboard({ onLogout }) {
                       </span>
                     </div>
 
-                    <p>{ticket.description}</p>
+                    <p>
+                      {ticket.description}
+                    </p>
 
                     <div className="ticket-meta">
                       <span>#{ticket.id}</span>
-                      <span>{ticket.status}</span>
+                      <span>
+                        {ticket.status}
+                      </span>
                     </div>
                   </button>
                 ))}
@@ -353,6 +394,7 @@ function Dashboard({ onLogout }) {
           <div className="panel-header">
             <div>
               <h3>AI Ticket Analysis</h3>
+
               <p>
                 Classify, summarize and generate a
                 suggested response.
@@ -363,7 +405,9 @@ function Dashboard({ onLogout }) {
               <button
                 className="primary-button"
                 onClick={() =>
-                  analyzeTicket(selectedTicket)
+                  analyzeTicket(
+                    selectedTicket
+                  )
                 }
                 disabled={analyzing}
               >
@@ -380,9 +424,13 @@ function Dashboard({ onLogout }) {
             </div>
           ) : !analysis ? (
             <div className="selected-ticket">
-              <h4>{selectedTicket.title}</h4>
+              <h4>
+                {selectedTicket.title}
+              </h4>
 
-              <p>{selectedTicket.description}</p>
+              <p>
+                {selectedTicket.description}
+              </p>
 
               <div className="selected-ticket-footer">
                 <span
@@ -394,7 +442,8 @@ function Dashboard({ onLogout }) {
                 </span>
 
                 <span>
-                  Status: {selectedTicket.status}
+                  Status:{" "}
+                  {selectedTicket.status}
                 </span>
               </div>
             </div>
@@ -403,28 +452,44 @@ function Dashboard({ onLogout }) {
               <div className="analysis-grid">
                 <div className="analysis-card">
                   <span>Category</span>
-                  <strong>{analysis.category}</strong>
+                  <strong>
+                    {analysis.category}
+                  </strong>
                 </div>
 
                 <div className="analysis-card">
                   <span>Urgency</span>
-                  <strong>{analysis.urgency}</strong>
+                  <strong>
+                    {analysis.urgency}
+                  </strong>
                 </div>
 
                 <div className="analysis-card">
                   <span>Sentiment</span>
-                  <strong>{analysis.sentiment}</strong>
+                  <strong>
+                    {analysis.sentiment}
+                  </strong>
                 </div>
               </div>
 
               <div className="analysis-section">
                 <span>Summary</span>
-                <p>{analysis.summary}</p>
+
+                <p>
+                  {analysis.summary}
+                </p>
               </div>
 
               <div className="analysis-section response-box">
-                <span>Suggested Response</span>
-                <p>{analysis.suggested_response}</p>
+                <span>
+                  Suggested Response
+                </span>
+
+                <p>
+                  {
+                    analysis.suggested_response
+                  }
+                </p>
               </div>
             </div>
           )}
