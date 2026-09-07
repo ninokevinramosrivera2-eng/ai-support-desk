@@ -1,7 +1,12 @@
 import json
 import os
 
+from dotenv import load_dotenv
 from openai import OpenAI
+
+
+# Carga automáticamente las variables del archivo .env
+load_dotenv()
 
 
 class AIServiceError(Exception):
@@ -101,7 +106,6 @@ Reglas:
                 "La IA devolvió una respuesta vacía."
             )
 
-        # Limpiar posibles bloques ```json
         if raw_output.startswith("```"):
             raw_output = raw_output.replace("```json", "")
             raw_output = raw_output.replace("```", "")
@@ -145,8 +149,7 @@ def generate_ticket_response(
     priority: str = "medium",
 ) -> str:
     """
-    Compatibilidad con el endpoint anterior.
-    Devuelve solamente la respuesta sugerida.
+    Devuelve solamente la respuesta sugerida por la IA.
     """
 
     analysis = analyze_ticket(

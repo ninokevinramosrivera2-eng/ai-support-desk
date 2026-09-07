@@ -1,37 +1,45 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import Base, engine
-from app.models.user import User
-from app.models.ticket import Ticket
-from app.routers.auth import router as auth_router
-from app.routers.tickets import router as tickets_router
-from app.routers.users import router as users_router
+from app.routers import auth, tickets, users
 
 
 Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(
-    title="AI Support Desk",
-    description="Professional AI-powered customer support platform built with FastAPI.",
+    title="AI Support Desk API",
     version="1.0.0",
 )
 
 
-app.include_router(users_router)
-app.include_router(auth_router)
-app.include_router(tickets_router)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
-def home():
+def root():
     return {
         "message": "AI Support Desk API is running"
     }
 
 
 @app.get("/health")
-def health_check():
+def health():
     return {
-        "status": "healthy"
+        "status": "ok"
     }
+
+
+app.include_router(users.router)
+app.include_router(auth.router)
+app.include_router(tickets.router)
