@@ -13,8 +13,13 @@ https://ai-support-desk-1.onrender.com
 
 ## Application Preview
 
-![AI Support Desk Dashboard](screenshots/dashboard.png)
+### AI Ticket Analysis
 
+![AI Support Desk AI Analysis](screenshots/ai-analysis-production.png)
+
+### Dashboard
+
+![AI Support Desk Dashboard](screenshots/dashboard.png)
 ## Features
 
 - User registration and authentication
