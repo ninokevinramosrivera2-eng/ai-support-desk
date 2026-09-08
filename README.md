@@ -1,29 +1,42 @@
 # AI Support Desk
 
-Full-stack AI-powered customer support application built with React, FastAPI, JWT authentication, SQLAlchemy, and the OpenAI API.
+A full-stack AI-powered customer support platform built with **React, FastAPI, SQLAlchemy, JWT authentication, and the OpenAI API**.
 
-AI Support Desk allows authenticated users to create and manage support tickets and use artificial intelligence to automatically classify customer requests, determine urgency and sentiment, summarize issues, and generate suggested responses.
+AI Support Desk allows authenticated users to create and manage customer support tickets and analyze them with artificial intelligence. The system automatically classifies requests, evaluates urgency and sentiment, summarizes customer issues, and generates suggested support responses.
+
+## Live Demo
+
+**Frontend:**  
+https://ai-support-desk-1.onrender.com
+
+> The application is deployed on Render and connected to the FastAPI backend.
+
+## Application Preview
+
+![AI Support Desk Dashboard](screenshots/dashboard.png)
 
 ## Features
 
 - User registration and authentication
-- JWT-based protected API endpoints
-- Create and list support tickets
+- JWT-protected API endpoints
+- Secure login system
+- Create and retrieve support tickets
 - Ticket priority management
 - AI-powered ticket analysis
 - Automatic ticket categorization
 - Urgency detection
 - Customer sentiment analysis
-- Automatic issue summaries
-- AI-generated support responses
+- Automatic issue summarization
+- AI-generated customer responses
 - Responsive React dashboard
 - REST API built with FastAPI
 - Interactive Swagger API documentation
-- Secure environment-variable configuration
+- Environment-based configuration
+- Production frontend deployment
 
 ## AI Ticket Analysis
 
-For each support ticket, the AI can generate structured information such as:
+Each support ticket can be analyzed by the AI and transformed into structured information:
 
 ```json
 {
@@ -34,6 +47,8 @@ For each support ticket, the AI can generate structured information such as:
   "suggested_response": "Hello, we can help you recover access to your account..."
 }
 ```
+
+This allows support teams to quickly understand incoming requests and prepare appropriate responses.
 
 ## Tech Stack
 
@@ -55,6 +70,12 @@ For each support ticket, the AI can generate structured information such as:
 - JavaScript
 - CSS
 - Fetch API
+
+### Deployment
+
+- Render
+- GitHub
+- Environment Variables
 
 ## Project Structure
 
@@ -79,6 +100,7 @@ ai-support-desk/
 │   ├── package.json
 │   └── vite.config.js
 │
+├── screenshots/
 ├── .gitignore
 └── README.md
 ```
@@ -103,7 +125,7 @@ PATCH  /tickets/{ticket_id}
 DELETE /tickets/{ticket_id}
 ```
 
-### AI
+### Artificial Intelligence
 
 ```text
 POST /tickets/{ticket_id}/ai-response
@@ -112,28 +134,52 @@ POST /tickets/{ticket_id}/ai-analyze
 
 ## Running Locally
 
-### Backend
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd ai-support-desk
+```
+
+### 2. Backend
 
 ```bash
 cd backend
 python -m venv venv
 ```
 
-Activate the virtual environment and install dependencies:
+Activate the virtual environment.
+
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Create a `.env` file based on `.env.example` and configure your environment variables.
+Create a `.env` file based on `.env.example`.
 
-Then start the API:
+Example:
+
+```env
+OPENAI_API_KEY=your_openai_api_key_here
+JWT_SECRET_KEY=your_secure_jwt_secret_here
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+DATABASE_URL=sqlite:///./ai_support_desk.db
+```
+
+Start FastAPI:
 
 ```bash
 uvicorn main:app --reload
 ```
 
-FastAPI will be available at:
+Backend:
 
 ```text
 http://127.0.0.1:8000
@@ -145,9 +191,9 @@ Swagger documentation:
 http://127.0.0.1:8000/docs
 ```
 
-### Frontend
+### 3. Frontend
 
-From another terminal:
+Open another terminal:
 
 ```bash
 cd frontend
@@ -155,37 +201,74 @@ npm install
 npm run dev
 ```
 
-The React application will normally be available at:
+The development frontend will normally be available at:
 
 ```text
 http://localhost:5173
 ```
 
+For production, the frontend API URL can be configured with:
+
+```env
+VITE_API_URL=https://your-backend-url.com
+```
+
 ## Security
 
-Sensitive information is stored using environment variables and is excluded from Git through `.gitignore`.
+Sensitive configuration is managed through environment variables.
 
-The repository includes `.env.example` as a configuration template. Real API keys and JWT secrets must never be committed.
+The project uses:
+
+- JWT authentication
+- Protected API routes
+- Environment-based secrets
+- `.gitignore` protection for `.env` files
+- Ownership checks for ticket operations
+
+The repository contains `.env.example` only as a configuration template.
+
+**Never commit real API keys or JWT secrets.**
 
 ## Current Status
 
-The application currently includes a functional full-stack workflow:
+The core full-stack workflow is operational:
 
 1. User authentication
 2. JWT-protected dashboard
 3. Ticket creation and retrieval
-4. FastAPI backend communication
-5. AI ticket analysis through the OpenAI API
-6. Structured AI results displayed in the React interface
+4. React ↔ FastAPI communication
+5. AI ticket analysis
+6. AI categorization and urgency detection
+7. Sentiment analysis
+8. AI-generated support responses
+9. Structured AI results displayed in the dashboard
+10. Public frontend deployment
 
 ## Roadmap
 
 - PostgreSQL production database
-- Automated tests
+- Automated backend tests
 - Ticket editing and deletion from the dashboard
-- Advanced filtering and search
+- Advanced ticket filtering and search
 - User roles and administrator dashboard
+- Analytics and support metrics
+- CI/CD improvements
+
+## What This Project Demonstrates
+
+This project demonstrates practical experience with:
+
+- Full-stack application development
+- REST API design
+- Python backend development
+- React frontend development
+- Authentication and authorization
+- Relational database integration
+- AI API integration
+- Structured LLM outputs
+- Environment and secret management
 - Cloud deployment
+- Git/GitHub workflow
 
 ## Author
 
@@ -195,8 +278,4 @@ Software Development · Python · FastAPI · React · Artificial Intelligence
 
 ---
 
-Built as a full-stack portfolio project focused on backend development and practical AI integration.
-
-## Application Preview
-
-![AI Support Desk Dashboard](screenshots/dashboard.png)
+Built as a full-stack portfolio project focused on backend engineering and practical AI integration.
