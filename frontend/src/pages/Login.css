@@ -152,6 +152,15 @@ input {
   font-size: 14px;
 }
 
+.login-success {
+  padding: 12px 14px;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.1);
+  color: #86efac;
+  font-size: 14px;
+}
+
 .login-button {
   margin-top: 4px;
   padding: 13px;
@@ -180,6 +189,30 @@ input {
   opacity: 0.65;
 }
 
+.login-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.login-switch-button {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+  color: #60a5fa;
+  font-weight: 700;
+}
+
+.login-switch-button:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
 .login-footer {
   display: flex;
   justify-content: center;
@@ -200,5 +233,10 @@ input {
 
   .login-header h2 {
     font-size: 26px;
+  }
+
+  .login-switch {
+    flex-direction: column;
+    gap: 4px;
   }
 }
